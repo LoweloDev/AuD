@@ -170,16 +170,40 @@ public class Liste<T>
 	{
 		assert(zweiteListe != null);
 
-		// Diese Methode wird im Praktikum implementiert
-		// TODO
+		if(zweiteListe == this) return;
+
+		if(this.istLeer()) {
+			this.anfang = zweiteListe.anfang;
+			this.ende = zweiteListe.ende;
+
+			return;
+		}
+
+		this.ende.naechster = zweiteListe.anfang;
+		this.ende = zweiteListe.ende != null ? zweiteListe.ende : this.ende;
+
+		zweiteListe.anfang = zweiteListe.ende = null;
 	}
 
 	public int entferneWerte(final T opfer)
 	{
 		int anzGeloeschte = 0;
+		Link<T> current = anfang;
+		Link<T> previous = anfang;
 
-		// Diese Methode wird im Praktikum implementiert
-		// TODO
+		while (current.naechster != null) {
+
+			if (current.daten.equals(opfer)) {
+				if(current.equals(anfang)) anfang = current.naechster;
+				previous.naechster = current.naechster;
+
+				anzGeloeschte++;
+			}
+
+			if (!current.daten.equals(opfer)) previous = current;
+
+			current = current.naechster;
+		}
 
 		return anzGeloeschte;
 	}
